@@ -1,6 +1,6 @@
 {
   "name": "paper-duration-input",
-  "description": "Polymer element to accept a duration with paper-input",
+  "description": "Polymer element to accept a duration using paper-inputs",
   "main": "paper-duration-input.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
