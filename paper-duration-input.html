@@ -1,0 +1,158 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+
+
+<!--
+This is a lite version of paper-time-input done by Ryan Burns.
+`<paper-duration-input>` Polymer element to accept a
+
+Polymer 2 supported
+
+### Styling
+
+`<paper-duration-input>` provides the following custom properties and mixins for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-duration-input-container` | Mixin applied to the inputs | `{}`
+`--paper-duration-input-mixin` | Mixin applied to the paper-inputs | `{}`
+
+@demo demo/index.html
+-->
+
+<dom-module id="paper-duration-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      paper-input{
+        width: 30px;
+        text-align: center;
+        --paper-input-container-input: {
+          /*
+          * Damn you firefox
+          * Needed to hide spin num in firefox
+          * http://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
+          */
+          -moz-appearance: textfield;
+          @apply --paper-duration-input-container;
+        };
+        --paper-input-container-input-webkit-spinner: {
+          -webkit-appearance: none;
+          margin: 0;
+          display: none;
+        };
+
+        @apply --paper-duration-input-mixin;
+      }
+
+
+
+      label{
+        @apply --paper-font-caption;
+      }
+
+      .time-input-wrap{
+        @apply --layout-horizontal;
+        @apply --layout-no-wrap;
+      }
+
+      [hidden]{
+        display: none !important;
+      }
+    </style>
+
+    <label hidden$="[[hideLabel]]">[[label]]</label>
+
+    <div class="time-input-wrap">
+
+      <!-- Hour Input -->
+      <paper-input
+        id="hour"
+        type="number"
+        value="{{hour}}"
+        required
+        auto-validate="[[autoValidate]]"
+        prevent-invalid-input
+        maxlength="2"
+        max="23"
+        min="0"
+        no-label-float
+        disabled="[[disabled]]">
+        <span suffix slot="suffix">:</span>
+      </paper-input>
+
+      <!-- Min Input -->
+      <paper-input
+        id="min"
+        type="number"
+        value="{{min}}"
+        required
+        auto-validate="[[autoValidate]]"
+        prevent-invalid-input
+        maxlength="2"
+        max="59"
+        min="0"
+        no-label-float
+        disabled="[[disabled]]">
+      </paper-input>
+
+
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'paper-duration-input',
+      properties: {
+        /**
+         * Label for the input
+         */
+        label: {
+          type: String,
+          value: 'Duration'
+        },
+        /**
+         * Auto validate time inputs
+         */
+        autoValidate: {
+          type: Boolean,
+          value: true
+        },
+        /**
+         * hides the label
+         */
+        hideLabel: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * disables the inputs
+         */
+        disabled: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * Hour
+         *
+         */
+        hour: {
+          type: Number,
+          notify: true
+        },
+        /**
+         * Minute
+         */
+        min: {
+          type: Number,
+          notify: true
+        },
+      },
+    });
+  </script>
+</dom-module>
